@@ -8,10 +8,11 @@ values
 ('Lyra and bonbon'),
 ('Numget'),
 ('Sugar cube corner furniture'),
-('#4189983'),
+('#41899883'),
 ('Celestia walking'),
 ('doomguy-esque HUD element'),
 ('Golden Oak tileset'),
 ('Interior House tileset'),
-('Twi idle and running')
+('Twi idle and running'),
+('Pony, expressions, bit and scroll')
 ;
