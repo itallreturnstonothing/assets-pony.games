@@ -47,7 +47,7 @@ create table ASSET_PACK(
 drop table if exists TAG;
 create table TAG(
     TAG_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
+    name TEXT NOT NULL UNIQUE,
     description TEXT,
     create_timestamp INTEGER NOT NULL,
     update_timestamp INTEGER NOT NULL
