@@ -1,14 +1,14 @@
 
-insert into TAG (name, create_timestamp, update_timestamp)
+insert into TAG (name)
 
 values
-('2D', unixepoch(), unixepoch()),
-('3D', unixepoch(), unixepoch()),
-('character model', unixepoch(), unixepoch()),
-('sprite', unixepoch(), unixepoch()),
-('prop', unixepoch(), unixepoch()),
-('background', unixepoch(), unixepoch()),
-('music', unixepoch(), unixepoch()),
-('sound effect', unixepoch(), unixepoch()),
-('tileset', unixepoch(), unixepoch())
+('2D'),
+('3D'),
+('character model'),
+('sprite'),
+('prop'),
+('background'),
+('music'),
+('sound effect'),
+('tileset')
 ;

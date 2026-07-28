@@ -1,17 +1,17 @@
 
-insert into ASSET_PACK (name, create_timestamp, update_timestamp)
+insert into ASSET_PACK (name)
 
 values
-('MARECON ASSET JAM', unixepoch(), unixepoch()),
-('Chibi ponies', unixepoch(), unixepoch()),
-('Juice, empty and filled bucket', unixepoch(), unixepoch()),
-('Lyra and bonbon', unixepoch(), unixepoch()),
-('Numget', unixepoch(), unixepoch()),
-('Sugar cube corner furniture', unixepoch(), unixepoch()),
-('#4189983', unixepoch(), unixepoch()),
-('Celestia walking', unixepoch(), unixepoch()),
-('doomguy-esque HUD element', unixepoch(), unixepoch()),
-('Golden Oak tileset', unixepoch(), unixepoch()),
-('Interior House tileset', unixepoch(), unixepoch()),
-('Twi idle and running', unixepoch(), unixepoch())
+('MARECON ASSET JAM'),
+('Chibi ponies'),
+('Juice, empty and filled bucket'),
+('Lyra and bonbon'),
+('Numget'),
+('Sugar cube corner furniture'),
+('#4189983'),
+('Celestia walking'),
+('doomguy-esque HUD element'),
+('Golden Oak tileset'),
+('Interior House tileset'),
+('Twi idle and running')
 ;
