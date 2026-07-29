@@ -6,6 +6,7 @@ with sqlite3.connect("test.sqlite3") as conn, open("assets.json", "w") as outfil
     lk_tags = dict(cursor.execute("select TAG_ID, name from TAG").fetchall())
     lk_authors = dict(cursor.execute("select AUTHOR_ID, name from AUTHOR").fetchall())
     lk_asset_packs = dict(cursor.execute("select ASSET_PACK_ID, name from ASSET_PACK").fetchall())
+    lk_download_links = dict(cursor.execute("select DOWNLOAD_LINK_ID, url from DOWNLOAD_LINK").fetchall())
     
     assets_result = cursor.execute("select ASSET_ID, name from ASSET").fetchall()
     
@@ -14,6 +15,7 @@ with sqlite3.connect("test.sqlite3") as conn, open("assets.json", "w") as outfil
     authors_result = cursor.execute("select ASSET_ID, AUTHOR_ID from REL_ASSET_AUTHOR").fetchall()
     tags_result = cursor.execute("select ASSET_ID, TAG_ID from REL_TAG_ASSET").fetchall()
     asset_packs_result = cursor.execute("select ASSET_ID, ASSET_PACK_ID from REL_ASSET_ASSET_PACK").fetchall()
+    download_links_result = cursor.execute("select ASSET_ID, DOWNLOAD_LINK_ID from REL_ASSET_DOWNLOAD_LINK").fetchall()
     for asset in assets:
         asset_id = asset["id"]
         
@@ -25,5 +27,8 @@ with sqlite3.connect("test.sqlite3") as conn, open("assets.json", "w") as outfil
         
         packs = [lk_asset_packs[pack_id] for (row_asset_id, pack_id) in asset_packs_result if row_asset_id == asset_id]
         asset["asset_packs"] = packs
+        
+        links = [lk_download_links[link_id] for (row_asset_id, link_id) in download_links_result if row_asset_id == asset_id]
+        asset["downloads"] = links
     
     json.dump(assets, outfile, indent=4)

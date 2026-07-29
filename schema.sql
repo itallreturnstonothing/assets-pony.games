@@ -53,6 +53,15 @@ create table TAG(
     update_timestamp INTEGER NOT NULL DEFAULT (unixepoch())
 );
 
+drop table if exists DOWNLOAD_LINK;
+create table DOWNLOAD_LINK(
+    DOWNLOAD_LINK_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    url TEXT NOT NULL UNIQUE,
+    is_active INTEGER,
+    latest_active_timestamp INTEGER,
+    create_timestamp INTEGER NOT NULL DEFAULT (unixepoch()),
+    update_timestamp INTEGER NOT NULL DEFAULT (unixepoch())
+);
 
 -- RELATIONS
 
@@ -88,4 +97,12 @@ create table REL_ASSET_ASSET_PACK(
     ASSET_PACK_ID REFERENCES ASSET_PACK (ASSET_PACK_ID),
     create_timestamp INTEGER NOT NULL DEFAULT (unixepoch()),
     PRIMARY KEY (ASSET_ID, ASSET_PACK_ID)
+);
+
+drop table if exists REL_ASSET_DOWNLOAD_LINK;
+create table REL_ASSET_DOWNLOAD_LINK(
+    ASSET_ID REFERENCES ASSET (ASSET_ID),
+    DOWNLOAD_LINK_ID REFERENCES DOWNLOAD_LINK (DOWNLOAD_LINK_ID),
+    create_timestamp INTEGER NOT NULL DEFAULT (unixepoch()),
+    PRIMARY KEY (ASSET_ID, DOWNLOAD_LINK_ID)
 );
