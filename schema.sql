@@ -1,12 +1,3 @@
-drop table if exists FILE;
-create table FILE(
-    FILE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    hash TEXT NOT NULL,
-    version INTEGER NOT NULL,
-    create_timestamp INTEGER NOT NULL DEFAULT (unixepoch())
-);
-
 drop table if exists LICENSE;
 create table LICENSE(
     LICENSE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -64,16 +55,6 @@ create table DOWNLOAD_LINK(
 );
 
 -- RELATIONS
-
-drop table if exists REL_FILE_ASSET;
-create table REL_FILE_ASSET(
-    REL_FILE_ASSET_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    FILE_ID REFERENCES FILE (FILE_ID),
-    ASSET_ID REFERENCES ASSET (ASSET_ID),
-    is_current INTEGER NOT NULL,
-    create_timestamp INTEGER NOT NULL DEFAULT (unixepoch()),
-    update_timestamp INTEGER NOT NULL DEFAULT (unixepoch())
-);
 
 drop table if exists REL_TAG_ASSET;
 create table REL_TAG_ASSET(
