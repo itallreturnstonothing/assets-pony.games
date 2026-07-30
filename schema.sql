@@ -54,6 +54,16 @@ create table DOWNLOAD_LINK(
     update_timestamp INTEGER NOT NULL DEFAULT (unixepoch())
 );
 
+drop table if exists PREVIEW;
+create table PREVIEW(
+    PREVIEW_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    original_file_name TEXT NOT NULL,
+    extension TEXT NOT NULL,
+    unique_file_name TEXT GENERATED ALWAYS AS ( concat(format('%u.', PREVIEW_ID), extension) ),
+    create_timestamp INTEGER NOT NULL DEFAULT (unixepoch()),
+    update_timestamp INTEGER NOT NULL DEFAULT (unixepoch())
+);
+
 -- RELATIONS
 
 drop table if exists REL_TAG_ASSET;
@@ -86,4 +96,12 @@ create table REL_ASSET_DOWNLOAD_LINK(
     DOWNLOAD_LINK_ID REFERENCES DOWNLOAD_LINK (DOWNLOAD_LINK_ID),
     create_timestamp INTEGER NOT NULL DEFAULT (unixepoch()),
     PRIMARY KEY (ASSET_ID, DOWNLOAD_LINK_ID)
+);
+
+drop table if exists REL_ASSET_PREVIEW;
+create table REL_ASSET_PREVIEW(
+    ASSET_ID REFERENCES ASSET (ASSET_ID),
+    PREVIEW_ID REFERENCES PREVIEW (PREVIEW_ID),
+    create_timestamp INTEGER NOT NULL DEFAULT (unixepoch()),
+    PRIMARY KEY (ASSET_ID, PREVIEW_ID)
 );
