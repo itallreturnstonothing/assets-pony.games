@@ -1,7 +1,7 @@
 import sqlite3
 import json
 
-with sqlite3.connect("test.sqlite3") as conn, open("assets.json", "w") as outfile:
+with sqlite3.connect("test.sqlite3") as conn, open("resources.json", "w") as outfile:
     cursor = conn.cursor()
     lk_tags = dict(cursor.execute("select TAG_ID, name from TAG").fetchall())
     lk_authors = dict(cursor.execute("select AUTHOR_ID, name from AUTHOR").fetchall())
@@ -9,9 +9,13 @@ with sqlite3.connect("test.sqlite3") as conn, open("assets.json", "w") as outfil
     lk_download_links = dict(cursor.execute("select DOWNLOAD_LINK_ID, url from DOWNLOAD_LINK").fetchall())
     lk_previews = dict(cursor.execute("select PREVIEW_ID, unique_file_name from PREVIEW").fetchall())
     
-    assets_result = cursor.execute("select ASSET_ID, name from ASSET").fetchall()
+    assets_result = cursor.execute("select ASSET_ID, name, description from ASSET").fetchall()
     
-    assets = [{"id" : asset_id, "name" : name} for (asset_id, name) in assets_result]
+    assets = [{
+        "id" : asset_id,
+        "name" : name,
+        "description" : description if description else ""
+    } for (asset_id, name, description) in assets_result]
     
     authors_result = cursor.execute("select ASSET_ID, AUTHOR_ID from REL_ASSET_AUTHOR").fetchall()
     tags_result = cursor.execute("select ASSET_ID, TAG_ID from REL_TAG_ASSET").fetchall()
@@ -28,7 +32,7 @@ with sqlite3.connect("test.sqlite3") as conn, open("assets.json", "w") as outfil
         asset["tags"] = tags
         
         packs = [lk_asset_packs[pack_id] for (row_asset_id, pack_id) in asset_packs_result if row_asset_id == asset_id]
-        asset["asset_packs"] = packs
+        asset["assetPacks"] = packs
         
         links = [lk_download_links[link_id] for (row_asset_id, link_id) in download_links_result if row_asset_id == asset_id]
         asset["downloads"] = links
@@ -37,5 +41,13 @@ with sqlite3.connect("test.sqlite3") as conn, open("assets.json", "w") as outfil
         asset["previews"] = previews
         
         asset["thumbnail"] = previews[0] if previews else "/asset_previews/generic.png"
+        
+        
+    resources = {
+        "allTags" : list(lk_tags.values()),
+        "allAuthors" : list(lk_authors.values()),
+        "allAssetPacks" : list(lk_asset_packs.values()),
+        "assets" : assets
+    }
     
-    json.dump(assets, outfile, indent=4)
+    json.dump(resources, outfile, indent=4)
