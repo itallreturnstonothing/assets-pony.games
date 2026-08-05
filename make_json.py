@@ -35,5 +35,7 @@ with sqlite3.connect("test.sqlite3") as conn, open("assets.json", "w") as outfil
         
         previews = ["/asset_previews/" + lk_previews[preview_id] for (row_asset_id, preview_id) in previews_result if row_asset_id == asset_id]
         asset["previews"] = previews
+        
+        asset["thumbnail"] = previews[0] if previews else "/asset_previews/generic.png"
     
     json.dump(assets, outfile, indent=4)
