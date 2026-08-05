@@ -40,7 +40,11 @@ with sqlite3.connect("test.sqlite3") as conn, open("resources.json", "w") as out
         previews = ["/asset_previews/" + lk_previews[preview_id] for (row_asset_id, preview_id) in previews_result if row_asset_id == asset_id]
         asset["previews"] = previews
         
-        asset["thumbnail"] = previews[0] if previews else "/asset_previews/generic.png"
+        has_preview = bool(previews)
+        if has_preview:
+            asset["thumbnail"] = previews[0]
+        else:
+            asset["thumbnail"] = "/asset_previews/" + ("music.png" if "Music" in tags else "generic.png")
         
         
     resources = {
