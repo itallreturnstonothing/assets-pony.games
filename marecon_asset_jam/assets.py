@@ -25,16 +25,16 @@ with sqlite3.connect("../test.sqlite3") as conn:
     df_previews.columns = ["path", "filename", "extension"]
     df_previews["extension"] = df_previews["extension"].str.lower()
     
-    if not os.path.exists("previews"):
-        os.mkdir("previews")
+    if not os.path.exists("../asset_previews"):
+        os.mkdir("../asset_previews")
     lk_previews = {}
     for _, (path, filename, extension) in df_previews.iterrows():
         cursor.execute("insert into PREVIEW (original_file_name, extension) values (?, ?) RETURNING PREVIEW_ID", (filename, extension))
         preview_id = cursor.fetchone()[0]
         lk_previews[path] = preview_id
-        preview_path = f"previews/{preview_id}.{extension}"
+        preview_path = f"../asset_previews/{preview_id}.{extension}"
         if not os.path.exists(preview_path):
-            os.symlink(f"../{path}", preview_path)
+            os.symlink(f"../marecon_asset_jam/{path}", preview_path)
     
     
     
